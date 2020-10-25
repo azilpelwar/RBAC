@@ -3,6 +3,11 @@ from RBAC.entity.role import RoleEntity
 from RBAC.access_control import AccessControl
 from RBAC.models.resources import Resources as resources
 from RBAC.models.action_types import ActionTypes as actionTypes
+from RBAC.exceptions import InvalidActionType, InvalidResource, InvalidRole, InvalidUser
+import sys
+import traceback
+
+
 
 class Driver():
     def __init__(self):
@@ -21,14 +26,14 @@ class Driver():
                 selected_user = user
 
         if selected_user==None:
-            raise "Invalid user selected"
+            raise InvalidUser
         return selected_user
 
     def select_resource(self):
         selected_resource = None
         print("Select a resource:")
         for index, resource in enumerate(resources):
-            print(f'{index+1} {resource}')
+            print(f'{index+1} {resource.name}')
         
         selected_no = int(input(":"))
 
@@ -37,27 +42,26 @@ class Driver():
                 selected_resource = resource
 
         if selected_resource==None:
-            raise "Invalid resource selected"
+            raise InvalidResource
         return selected_resource
 
     def select_action_type(self):
         selected_action_type = None
         print("Select a action Types:")
         for index, action_type in enumerate(actionTypes):
-            print(f'{index+1} {action_type}')
+            print(f'{index+1} {action_type.name}')
         
         selected_no = int(input(":"))
-
         for index, action_type in enumerate(actionTypes):
             if index+1 == selected_no:
                 selected_action_type = action_type
 
-        if selected_resource==None:
-            raise "Invalid resource selected"
+        if selected_action_type==None:
+            raise InvalidActionType
         return selected_action_type
     def show_all_users(self):
         for user, roles in self.__all_users.items():
-            [print(f'{user}    {str(role.resource.value)}   {str(role.action_type.value)}') for role in roles]
+            [print(f'{user}     {str(role.resource.value)}      {str(role.action_type.value)}') for role in roles]
 if __name__ == "__main__":
     try:
         choice = 1
@@ -74,5 +78,12 @@ if __name__ == "__main__":
         else:
             print("Access Denied")
 
-    except Exception as e:
-        print(e)
+    except InvalidActionType:
+        print("Invalid action type selected")
+    except InvalidUser:
+        print("Invalid user selected")
+    except InvalidResource:
+        print("Invalid Resource selected")
+    except InvalidRole:
+        print("Invalid Role selected")
+    
