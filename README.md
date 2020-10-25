@@ -34,12 +34,12 @@ Currently the system supports adding the users and roles via adding entries in R
         Stores the roles for a each resource and action type
     * user.py
         Stores the user details such as user name and its assined roles
-*RBAC/entity
+* RBAC/entity
     * user.py
         Contains the user interaction methods. To add more users add it in populate_default_entity() method
     * role.py
         Contains the role interation methods. To add more roles add those in populate_default_entity() method
-*RBAC/
+* RBAC/
     * access_control.py
         Class to manage the access control, it authenticates/validates whther the user has access to specific role and action type
     * exceptions.py
