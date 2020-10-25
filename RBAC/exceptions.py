@@ -9,3 +9,6 @@ class InvalidActionType(Exception):
 
 class InvalidRole(Exception):
     pass
+
+class InvalidInput(Exception):
+    pass

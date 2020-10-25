@@ -3,7 +3,7 @@ from RBAC.entity.user import UserEntity
 from RBAC.models.action_types import ActionTypes
 from RBAC.models.user import User
 from RBAC.models.resources import Resources
-
+from RBAC.exceptions import InvalidInput,InvalidUser
 
 class AccessControl():
     def __init__(self):
@@ -19,10 +19,10 @@ class AccessControl():
 
     def validate_input(self, user: str, action_types: ActionTypes, resource: Resources):
         if not user or not action_types or not resource:
-            raise "Not valid input for authentication"
+            raise InvalidInput
         if user not in self.__users:
-            raise "User not found"
+            raise InvalidUser
         if action_types not in ActionTypes:
-            raise "Action Type not found"
+            raise InvalidActionType
         if resource not in Resources:
-            raise "Resource not found"
+            raise InvalidResource

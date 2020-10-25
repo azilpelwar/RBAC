@@ -10,11 +10,9 @@ class UserEntity():
 
     def __populate_default_entity(self):
         all_roles = RoleEntity().get()
-        # self.__users.append(User(name='admin',roles=[role in role in all_roles]))
         self.__users["admin"] = [role for role in all_roles]
         self.__users["user"] = [
             role for role in all_roles if int(role.name[-1]) in [1, 3, 4]]
-        # self.__users["user1"] = [role for role in all_roles if role.name]
-
+        
     def get(self):
         return self.__users

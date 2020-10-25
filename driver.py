@@ -4,10 +4,6 @@ from RBAC.access_control import AccessControl
 from RBAC.models.resources import Resources as resources
 from RBAC.models.action_types import ActionTypes as actionTypes
 from RBAC.exceptions import InvalidActionType, InvalidResource, InvalidRole, InvalidUser
-import sys
-import traceback
-
-
 
 class Driver():
     def __init__(self):
@@ -59,24 +55,25 @@ class Driver():
         if selected_action_type==None:
             raise InvalidActionType
         return selected_action_type
+
     def show_all_users(self):
+        print(f'User     Resource Name      Action Type')
         for user, roles in self.__all_users.items():
             [print(f'{user}     {str(role.resource.value)}      {str(role.action_type.value)}') for role in roles]
+
 if __name__ == "__main__":
     try:
-        choice = 1
         driver = Driver()
         driver.show_all_users()
         selected_user = driver.select_user()
         selected_resource = driver.select_resource()
         selected_action_type = driver.select_action_type()
-        print("I am here")
         auth_status = AccessControl().authenticate(
             selected_user, selected_action_type, selected_resource)
         if auth_status:
-            print("Access Provided")
+            print(f'Access Provided for {selected_user} -> {selected_resource.value} -> {selected_action_type.value}')
         else:
-            print("Access Denied")
+            print(f'Access Denied for {selected_user} -> {selected_resource.value} -> {selected_action_type.value}')
 
     except InvalidActionType:
         print("Invalid action type selected")
@@ -86,4 +83,3 @@ if __name__ == "__main__":
         print("Invalid Resource selected")
     except InvalidRole:
         print("Invalid Role selected")
-    
