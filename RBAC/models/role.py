@@ -1,7 +1,7 @@
 from RBAC.models.action_types import ActionTypes
 from RBAC.models.resources import Resources
 class Role():
-    def __init__(self, name:str, resource: Resource, action_type: ActionTypes):
+    def __init__(self, name:str, resource: Resources, action_type: ActionTypes):
         self.__name = name
         self.__resource = resource
         self.__action_type = action_type
